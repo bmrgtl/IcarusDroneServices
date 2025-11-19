@@ -16,9 +16,23 @@ namespace IcarusDroneServices
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Drone> FinishedList = new List<Drone>();
+        Queue<Drone> RegularService = new Queue<Drone>();
+        Queue<Drone> ExpressService = new Queue<Drone>();
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AddNewItem(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
     }
 }
