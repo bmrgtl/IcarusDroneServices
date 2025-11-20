@@ -29,36 +29,42 @@
                 <StackPanel>
                     <!-- Logo and Company Name -->
                     <StackPanel HorizontalAlignment="Center" Margin="0 30 0 10">
-                        <TextBlock Text="Icarus Pty Ltd" FontSize="36" Foreground="#312f2f" FontFamily="Century Gothic" FontWeight="Bold" HorizontalAlignment="Center" />
-                        <TextBlock Text="Drone Management Services" FontSize="20" Foreground="#312f2f" FontFamily="Century Gothic" FontWeight="Thin" HorizontalAlignment="Center" FontStyle="Italic"/>
+                        <TextBlock Text="Icarus Pty Ltd" FontSize="34" Foreground="#312f2f" FontFamily="Century Gothic" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="Drone Management Services" FontSize="18" Foreground="#312f2f" FontFamily="Century Gothic" FontWeight="Thin" HorizontalAlignment="Center" FontStyle="Italic"/>
                     </StackPanel>
 
                     <!-- Drone Details Form-->
-                    <TextBlock Text="Service Form" FontSize="24" FontWeight="Bold" Margin="30 40 0 20" Foreground="#312f2f" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Service Form" FontSize="24" FontWeight="Bold" Margin="30 15 0 20" Foreground="#312f2f" HorizontalAlignment="Left"/>
                     <!--Service Tag-->
                     <TextBlock Text="Service Tag" FontSize="14" Margin="35 0 35 0" FontFamily="Century Gothic" FontStyle="Italic"/>
                     <Border BorderThickness="2" BorderBrush="#7296a4" Margin="35 0 35 0" Height="40" VerticalAlignment="Center">
                         <wpfx:IntegerUpDown x:Name="txtServiceTag" Padding="10 0 0 0" VerticalAlignment="Center" FontSize="16" Background="Transparent" Height="40" TextAlignment="Left"
-                                            FontFamily="Century Gothic" HorizontalAlignment="Center" Width="225" BorderThickness="0" FormatString="N0" Value="100" Increment="10"/>
+                                            FontFamily="Century Gothic" HorizontalAlignment="Center" Width="225" BorderThickness="0" FormatString="N0" Increment="10" Maximum="900"/>
                     </Border>
                     <!--Client Name-->
                     <TextBlock Text="Client Name" FontSize="14" Margin="35 10 35 0" FontFamily="Century Gothic" FontStyle="Italic"/>
                     <Border BorderThickness="2" BorderBrush="#7296a4" Margin="35 0 35 0" Height="40" VerticalAlignment="Center">
                         <TextBox x:Name="txtClientName" Padding="10 0 10 0" VerticalAlignment="Center" FontSize="16" Background="Transparent"
-                                   FontFamily="Century Gothic" HorizontalAlignment="Left" Width="280" BorderThickness="0"/>
+                                   FontFamily="Century Gothic" HorizontalAlignment="Left" Width="225" BorderThickness="0"/>
                     </Border>
                     <!-- Drone Model-->
                     <TextBlock Text="Drone Model" FontSize="14" Margin="35 10 35 0" FontFamily="Century Gothic" FontStyle="Italic"/>
                     <Border BorderThickness="2" BorderBrush="#7296a4" Margin="35 0 35 0" Height="40" VerticalAlignment="Center">
                         <TextBox x:Name="txtDroneModel" Padding="10 0 10 0" VerticalAlignment="Center" FontSize="16" Background="Transparent"
-                                 FontFamily="Century Gothic" HorizontalAlignment="Left" Width="280" BorderThickness="0"/>
+                                 FontFamily="Century Gothic" HorizontalAlignment="Left" Width="225" BorderThickness="0"/>
                     </Border>
                     <!-- Service Problem-->
                     <TextBlock Text="Service Problem" FontSize="14" Margin="35 10 35 0" FontFamily="Century Gothic" FontStyle="Italic"/>
                     <Border BorderThickness="2" BorderBrush="#7296a4" Margin="35 0 35 0" Height="100" VerticalAlignment="Center">
-                        <TextBox x:Name="txtServiceProblem" Padding="10 0 10 0" VerticalAlignment="Center" FontSize="16" Background="Transparent"
-                                 FontFamily="Century Gothic" HorizontalAlignment="Left" Width="280" BorderThickness="0" Height="100"
+                        <TextBox x:Name="txtServiceProblem" Padding="10 10 10 0" VerticalAlignment="Center" FontSize="16" Background="Transparent"
+                                 FontFamily="Century Gothic" HorizontalAlignment="Left" Width="225" BorderThickness="0" Height="100"
                                  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                    </Border>
+                    <!-- Service Cost-->
+                    <TextBlock Text="Service Cost" FontSize="14" Margin="35 10 35 0" FontFamily="Century Gothic" FontStyle="Italic"/>
+                    <Border BorderThickness="2" BorderBrush="#7296a4" Margin="35 0 35 0" Height="40" VerticalAlignment="Center">
+                        <TextBox x:Name="txtServiceCost" Padding="10 0 10 0" VerticalAlignment="Center" FontSize="16" Background="Transparent"
+                                 FontFamily="Century Gothic" HorizontalAlignment="Left" Width="225" BorderThickness="0"/>
                     </Border>
                     <!-- Service Priority-->
                     <StackPanel Orientation="Horizontal" Margin="35 15 35 0">
@@ -70,54 +76,138 @@
                     </StackPanel>
                     <!-- Add Drone Button -->
                     <Button x:Name="btnAddDrone" Content="Add Drone" FontSize="18" FontWeight="Bold" Margin="35 20 35 0" Height="45" Style="{StaticResource ChangeHoverColor}"
-                            FontFamily="Century Gothic" BorderThickness="0" Cursor="Hand"/>
+                            FontFamily="Century Gothic" BorderThickness="0" Cursor="Hand" Click="AddNewItem"/>
+                    <!-- Status Panel -->
+                    <TextBox x:Name="txtServiceStatusDrone" Margin="35 10 35 0" FontFamily="Century Gothic" FontSize="12" TextWrapping="Wrap" Foreground="#312f2f"
+                             VerticalScrollBarVisibility="Auto" IsReadOnly="True" Background="Transparent" BorderThickness="0" Width="225"/>
                 </StackPanel>
             </Border>
             
             
-            <!-- Center Panel: Regular List -->
+            <!-- Center Panel: Regular Queue -->
             <Border Grid.Column="1" Grid.Row="0" CornerRadius="25" Margin="20,10,20,0">
                 <StackPanel Margin="0,20,0,0">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Regular Service Queue" FontSize="24" FontWeight="Bold" Margin="30 30 0 20" Foreground="#312f2f" HorizontalAlignment="Left"/>
                         <Button x:Name="btnMarkCompleteReg" Content="Completed" FontSize="14" Margin="150 30 0 20" Height="30" Width="150"
-                                FontFamily="Century Gothic" BorderThickness="0" Cursor="Hand" Style="{StaticResource ChangeHoverColor}"/>
+                                FontFamily="Century Gothic" BorderThickness="0" Cursor="Hand" Style="{StaticResource ChangeHoverColor}"
+                                Click="btnMarkCompleteReg_Click"/>
                     </StackPanel>
-                    <ListView x:Name="lstRegularServices" Margin="30 0 30 30" FontFamily="Century Gothic" FontSize="14" BorderThickness="0" ScrollViewer.CanContentScroll="True">
+                    <ListView x:Name="lvRegularServices" Margin="30 0 30 30" FontFamily="Century Gothic" FontSize="12" BorderThickness="0" 
+                              ScrollViewer.CanContentScroll="True" ItemsSource="{Binding RegularServiceCollection}" MouseLeftButtonUp="lvRegularServices_MouseLeftButtonUp">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="#E6F0F2" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#CDDEE5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Tag" Width="100" DisplayMemberBinding="{Binding ServiceTag}" />
-                                <GridViewColumn Header="Client Name" Width="150" DisplayMemberBinding="{Binding ClientName}" />
-                                <GridViewColumn Header="Drone Model" Width="150" DisplayMemberBinding="{Binding DroneModel}" />
-                                <GridViewColumn Header="Service Cost" Width="150" DisplayMemberBinding="{Binding ServiceCost}" />
+                                <GridViewColumn Header="Tag" Width="50">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ServiceTag}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Client Name" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ClientName}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Drone Model" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DroneModel}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Service Problem" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ServiceProblem}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Cost" Width="100" DisplayMemberBinding="{Binding ServiceCost, StringFormat=C2}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </StackPanel>
             </Border>
-            <!-- Center Panel: Express List -->
+            
+            <!-- Center Panel: Express Queue -->
             <Border Grid.Column="1" Grid.Row="1" CornerRadius="25" Margin="20 0 20 0">
                 <StackPanel Margin="0,10,0,0">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Express Service Queue" FontSize="24" FontWeight="Bold" Margin="30 30 0 20" Foreground="#312f2f" HorizontalAlignment="Left"/>
                         <Button x:Name="btnMarkCompleteExp" Content="Completed" FontSize="14" Margin="150 30 0 20" Height="30" Width="150" Style="{StaticResource ChangeHoverColor}"
-                                FontFamily="Century Gothic" BorderThickness="0" Cursor="Hand"/>
+                                FontFamily="Century Gothic" BorderThickness="0" Cursor="Hand" Click="btnMarkCompleteExp_Click" />
                     </StackPanel>
-                    <ListView x:Name="lstExpressServices" Margin="30 0 30 30" FontFamily="Century Gothic" FontSize="14" BorderThickness="0" ScrollViewer.CanContentScroll="True">
+                    <ListView x:Name="lvExpressServices" Margin="30 0 30 30" FontFamily="Century Gothic" FontSize="12" BorderThickness="0" 
+                              ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ExpressServiceCollection}" MouseLeftButtonUp="lvExpressServices_MouseLeftButtonDown">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="#E6F0F2" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#CDDEE5"/>
+                                        <Setter Property="BorderBrush" Value="#9EBECB"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Tag" Width="100" DisplayMemberBinding="{Binding ServiceTag}" />
-                                <GridViewColumn Header="Client Name" Width="150" DisplayMemberBinding="{Binding ClientName}" />
-                                <GridViewColumn Header="Drone Model" Width="150" DisplayMemberBinding="{Binding DroneModel}" />
-                                <GridViewColumn Header="Service Cost" Width="150" DisplayMemberBinding="{Binding ServiceCost}" />
+                                <GridViewColumn Header="Tag" Width="50">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ServiceTag}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Client Name" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ClientName}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Drone Model" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DroneModel}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Service Problem" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ServiceProblem}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Cost" Width="100" DisplayMemberBinding="{Binding ServiceCost, StringFormat=C2}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </StackPanel>
             </Border>
-            <!-- Right Panel: Completed List -->
             
-            <Border Grid.Column="2" Grid.RowSpan="2" CornerRadius="25">
+            <!-- Right Panel: Completed List -->
+            <Border Grid.Column="2" Grid.Row="0"  CornerRadius="25">
                 <StackPanel>
                     <Button x:Name="btnCloseApp" Width="15" Height="15" Margin="0,0,5,10" Style="{StaticResource iconApp}" Click="btnExit_Click"
                             BorderThickness="0">
@@ -132,27 +222,37 @@
                                 <GradientStop Color="#9ebecb" Offset="0.8"/>
                             </LinearGradientBrush>
                         </Border.Background>
-                        <TextBlock Text="Completed Services" FontSize="24" FontWeight="Bold" Margin="30 30 0 20" Foreground="#312f2f" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Completed Services" TextAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0 30 0 20" Foreground="#312f2f" HorizontalAlignment="Center"/>
                     </Border>
-                    <ListView x:Name="lstCompletedServices" Margin="10 20 10 30" FontFamily="Century Gothic" FontSize="14" BorderThickness="0" ScrollViewer.CanContentScroll="True">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Client Name" Width="150" DisplayMemberBinding="{Binding ServiceTag}" />
-                                <GridViewColumn Header="Cost" Width="100" DisplayMemberBinding="{Binding ClientName}" />
-                                <GridViewColumn Header="">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox IsChecked="{Binding IsPaid}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <TextBlock Text="Double-click item to remove." FontSize="12" FontStyle="Italic" Margin="10 10 0 0" Foreground="#312f2f" HorizontalAlignment="Left"/>
+                    <ListBox x:Name="lbCompletedServices" Margin="10 0 10 20" FontFamily="Century Gothic" Background="Transparent" ItemsSource="{Binding FinishedServiceCollection}"
+                             FontSize="12" BorderThickness="1" BorderBrush="#9ebecb" MinHeight="150" ScrollViewer.CanContentScroll="True" MouseDoubleClick="lbCompletedServices_MouseDoubleClick">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="5" Foreground="#312f2f" Background="Transparent"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </Border>
-
-
+            
+            <!-- Right Panel: Status Box -->
+            <Border Grid.Column="2" Grid.Row="1" CornerRadius="25" Margin="0,10,0,0" VerticalAlignment="Bottom">
+                <StackPanel>
+                    <Border CornerRadius="25">
+                        <Border.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Color="#cddee5" Offset="0" />
+                                <GradientStop Color="#9ebecb" Offset="0.8"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <StackPanel>
+                            <TextBox x:Name="txtServiceStatusQueue" Margin="20 0 20 0" Padding="0 10 0 10"  FontFamily="Century Gothic" FontSize="14" TextWrapping="Wrap" Foreground="#312f2f"
+                                     AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontStyle="Italic"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
         </Grid>
 
     </Border>

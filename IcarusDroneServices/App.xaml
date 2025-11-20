@@ -59,5 +59,16 @@
             </Style.Triggers>
         </Style>
 
+             
+        <Style TargetType="ListViewItem">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="ListItemTextWrap" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+
     </Application.Resources>
 </Application>
