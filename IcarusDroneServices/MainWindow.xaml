@@ -38,8 +38,8 @@
                     <!--Service Tag-->
                     <TextBlock Text="Service Tag" FontSize="14" Margin="35 0 35 0" FontFamily="Century Gothic" FontStyle="Italic"/>
                     <Border BorderThickness="2" BorderBrush="#7296a4" Margin="35 0 35 0" Height="40" VerticalAlignment="Center">
-                        <wpfx:IntegerUpDown x:Name="txtServiceTag" Padding="10 0 0 0" VerticalAlignment="Center" FontSize="16" Background="Transparent" Height="40" TextAlignment="Left"
-                                            FontFamily="Century Gothic" HorizontalAlignment="Center" Width="225" BorderThickness="0" FormatString="N0" Increment="10" Maximum="900"/>
+                        <wpfx:IntegerUpDown x:Name="txtServiceTag" Value="100" Padding="10 0 0 0" VerticalAlignment="Center" FontSize="16" Background="Transparent" Height="40" TextAlignment="Left" IsReadOnly="True"
+                                            FontFamily="Century Gothic" HorizontalAlignment="Center" Width="225" BorderThickness="0" FormatString="N0" Increment="10" Minimum="100" Maximum="900"/>
                     </Border>
                     <!--Client Name-->
                     <TextBlock Text="Client Name" FontSize="14" Margin="35 10 35 0" FontFamily="Century Gothic" FontStyle="Italic"/>

@@ -78,16 +78,6 @@ namespace IcarusDroneServices
             }
         }
 
-        // 6.1: Public accessor methods
-        public Drone(int serviceTag, string clientName, string droneModel, string serviceProblem, double serviceCost)
-        {
-            ServiceTag = serviceTag;
-            ClientName = clientName;
-            DroneModel = droneModel;
-            ServiceProblem = serviceProblem;
-            ServiceCost = serviceCost;
-        }
-
         // 6.1: Display Method that returns client name and service cost
         public string display()
         {

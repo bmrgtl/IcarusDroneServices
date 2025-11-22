@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace IcarusDroneServices
 {
@@ -28,8 +29,8 @@ namespace IcarusDroneServices
         public ObservableCollection<Drone> ExpressServiceCollection { get; set; } = new();
         public ObservableCollection<Drone> FinishedServiceCollection { get; set; } = new();
 
-        // service tag tracker, start with 90 so first increment is 100
-        private int currentServiceTag = 90;
+        // service tag tracker
+        private int lastServiceTag = 100;
 
         public MainWindow()
         {
@@ -68,30 +69,13 @@ namespace IcarusDroneServices
                 return;
             }
 
-            // Increment service tag
-            IncrementServiceTag();
-
-            // Validate service tag range
-            if (serviceTag == -1)
-            {
-                txtServiceStatusDrone.Text = "Service tags must be at least 100 and at most 900.";
-                return; // stop if invalid
-            }
-
             // Create new drone object
-            var drone = new Drone(
-                serviceTag,
-                txtClientName.Text,
-                txtDroneModel.Text,
-                txtServiceProblem.Text,
-                cost);
-
-            // Validate service tag
-            if (drone.ServiceTag % 10 != 0)
-            {
-                txtServiceStatusDrone.Text = "Service tags must be of increments of 10.";
-                return;
-            }
+            var drone = new Drone();
+            drone.ServiceTag = serviceTag;
+            drone.ClientName = txtClientName.Text;
+            drone.DroneModel = txtDroneModel.Text;
+            drone.ServiceProblem = txtServiceProblem.Text;
+            drone.ServiceCost = cost;
 
             // Get service priority            
             string priority = GetServicePriority();
@@ -113,6 +97,8 @@ namespace IcarusDroneServices
                 txtServiceStatusDrone.Text = "Please select a service priority.";
                 return;
             }
+
+            IncrementServiceTag();
 
             // Display updated queues
             displayRegularServices();
@@ -165,10 +151,19 @@ namespace IcarusDroneServices
         // 6.10: Validate Service Cost
         private bool ValidateServiceCost(out double cost)
         {
-            cost = 0;
+            var serviceCostText = txtServiceCost.Text.Trim();
 
-            if (double.TryParse(txtServiceCost.Text, out cost))
+            string pattern = @"^\d+(?:\.\d{1,2})?$";
+
+            if (Regex.IsMatch(serviceCostText, pattern))
             {
+                // parse service cost
+                if (!double.TryParse(serviceCostText, out cost))
+                {
+                    txtServiceStatusDrone.Text = "Please ensure service cost has numerical inputs only.";
+                    return false;
+                }
+
                 // ensures two decimal places only
                 cost = Math.Round(cost, 2);
 
@@ -184,7 +179,8 @@ namespace IcarusDroneServices
 
             else
             {
-                txtServiceStatusDrone.Text = "Please ensure valid service cost.";
+                cost = 0;
+                txtServiceStatusDrone.Text = "Please ensure service cost has numerical inputs only.";
                 return false;
             }
         }
@@ -192,21 +188,17 @@ namespace IcarusDroneServices
         // 6.11: Increment service tag by 10, reset to 100 if exceeds 900
         private int IncrementServiceTag()
         {
-            int nextTag = currentServiceTag + 10;   
+            int currentServiceTag = int.Parse(txtServiceTag.Text) + 10;
+            lastServiceTag = currentServiceTag;
 
-            if (nextTag < 100)
+            if (currentServiceTag > 900)
             {
-                txtServiceStatusDrone.Text = "Service tag must be at least 100.";
-                return -1;
+                currentServiceTag = 100;
+                txtServiceStatusDrone.Text = "Service Tag Maximum Reached. \n Tag has been reset to 100.";
             }
 
-            if (nextTag > 900)
-            {
-                nextTag = 100;
-            }
+            txtServiceTag.Value = currentServiceTag;
 
-            currentServiceTag = nextTag;
-            txtServiceTag.Value = nextTag;
             return currentServiceTag;
         }
 
@@ -217,7 +209,7 @@ namespace IcarusDroneServices
             {
                 txtClientName.Text = selectedDrone.ClientName;
                 txtServiceProblem.Text = selectedDrone.ServiceProblem;
-                txtServiceStatusQueue.Text = "Drone with Service Tag " + selectedDrone.ServiceTag + "displayed in textbox.";
+                txtServiceStatusQueue.Text = "Drone with Service Tag " + selectedDrone.ServiceTag + " displayed in textbox.";
             }
         }
 
@@ -228,7 +220,7 @@ namespace IcarusDroneServices
             {
                 txtClientName.Text = selectedDrone.ClientName;
                 txtServiceProblem.Text = selectedDrone.ServiceProblem;
-                txtServiceStatusQueue.Text = "Drone with Service Tag " + selectedDrone.ServiceTag + "displayed in textbox.";
+                txtServiceStatusQueue.Text = "Drone with Service Tag " + selectedDrone.ServiceTag + " displayed in textbox.";
             }
         }
 
@@ -348,7 +340,7 @@ namespace IcarusDroneServices
         // 6.17: Clear Input Fields
         private void ClearFields()
         {
-            txtServiceTag.Value = IncrementServiceTag();
+            txtServiceTag.Value = lastServiceTag;
             txtClientName.Clear();
             txtDroneModel.Clear();
             txtServiceProblem.Clear();
